@@ -118,6 +118,17 @@ sudo install -m 600 -u "$USERNAME" -g "$USERNAME" config ~/.ssh/
 
 #docker-dnsdock and configuration
 sudo apt install dnsmasq -y
+
+#Manage Engine
+unzip ./DefaultRemoteOffice_LinuxAgent.zip -d ./MEDC
+cd ./MEDC
+sudo chmod +x UEMS_LinuxAgent.bin
+sudo ./UEMS_LinuxAgent.bin
+
+#Kaspersky
+sudo chmod +x ./klnagent64_14.2.0-35148_amd64.sh
+sudo ./klnagent64_14.2.0-35148_amd64.sh
+
 #TODO: docker-dnsdock related configuration
 
 #TODO: Configuring Printers

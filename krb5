@@ -1,0 +1,77 @@
+[libdefaults]
+	default_realm       = ${MINTEL_OFFICE}.MINTEL.AD
+	default_etypes      = des-cbc-crc des-cbc-md5 ARCFOUR-HMAC-MD5
+	default_etypes_des  = des-cbc-crc des-cbc-md5 ARCFOUR-HMAC-MD5
+	default_keytab_name = /etc/krb5.keytab
+	default_ccache_name = KEYRING:persistent:%{uid}
+	kdc_timesync = 1
+	ccache_type = 4
+	forwardable = true
+	proxiable = true
+	dns_lookup_kdc = yes
+	dns_lookup_realm = yes
+	realm_try_domains = 1
+	noaddresses = true
+	rdns = true
+	renew_lifetime = 36000
+	ticket_lifetime = 36000
+
+[realms]
+	LONDON.MINTEL.AD = {
+		default_domain = london.mintel.ad
+	}
+
+	CHICAGO.MINTEL.AD = {
+		default_domain = chicago.mintel.ad
+	}
+
+	SHANGHAI.MINTEL.AD = {
+		default_domain = shanghai.mintel.ad
+	}
+
+	SAOPAULO.MINTEL.AD = {
+		default_domain = saopaulo.mintel.ad
+	}
+
+	APAC.MINTEL.AD = {
+		default_domain = apac.mintel.ad
+	}
+
+	CHI-MR.MINTEL.AD = {
+		default_domain = chi-mr.mintel.ad
+	}
+
+	MINTEL.AD = {
+		default_domain = mintel.ad
+	}
+
+[domain_realm]
+	london.mintel.ad = LONDON.MINTEL.AD
+	.london.mintel.ad = LONDON.MINTEL.AD
+
+	chicago.mintel.ad = CHICAGO.MINTEL.AD
+	.chicago.mintel.ad = CHICAGO.MINTEL.AD
+
+	shanghai.mintel.ad = SHANGHAI.MINTEL.AD
+	.shanghai.mintel.ad = SHANGHAI.MINTEL.AD
+
+	saopaulo.mintel.ad = SAOPAULO.MINTEL.AD
+	.saopaulo.mintel.ad = SAOPAULO.MINTEL.AD
+
+	apac.mintel.ad = APAC.MINTEL.AD
+	.apac.mintel.ad = APAC.MINTEL.AD
+
+	chi-mr.mintel.ad = CHI-MR.MINTEL.AD
+	.chi-mr.mintel.ad = CHI-MR.MINTEL.AD
+
+	mintel.ad = MINTEL.AD
+	.mintel.ad = MINTEL.AD
+
+[appdefaults]
+	pam = {
+		debug = false
+		ticket_lifetime = 36000
+		renew_lifetime = 36000
+		forwardable = true
+		krb4_convert = false
+	}

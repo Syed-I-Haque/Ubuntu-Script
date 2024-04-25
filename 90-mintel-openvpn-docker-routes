@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Mintel's OpenVPN config pushes all their routes to us, but one of the routes
+# conflicts with Docker's default bridge interface, and the alternate addresses
+# we use - 10.20.0.0/16 - conflict with another route. This script removes the
+# 10.0.0.0/8 route that openvpn pushes, and replaces it with routes that pass
+# everything except our docker ip range to mintel over the vpn
+
+routes=(
+    "10.0.0.0/12"
+    "10.16.0.0/14"
+    "10.21.0.0/16"
+    "10.22.0.0/15"
+    "10.24.0.0/13"
+    "10.32.0.0/11"
+    "10.64.0.0/10"
+    "10.128.0.0/9"
+)
+if [[ "$IP4_NUM_ROUTES" -gt 0 ]]; then
+    i=0
+    while [[ $i -lt "$IP4_NUM_ROUTES" ]]; do
+        var="IP4_ROUTE_$i"
+        route=$( eval echo \$$var )
+        let "i = $i + 1"
+        net=$(echo "$route" | cut -d ' ' -f 1)
+        if [ "$net" = "10.0.0.0/8" ]; then
+            mapfile -t route < <( route -n | grep ^10.0.0.0 | tr -s ' ' '\n')
+            # 0=dest 1=gw 2=genmask 3=flags 4=metric 5=ref 6=use 7=iface
+            # declare -p route
+            if [ "${route[0]}" = "10.0.0.0" ] && [ "${route[2]}" = "255.0.0.0" ]; then
+                route del -net 10.0.0.0 gw "${route[1]}" netmask 255.0.0.0 dev "${route[7]}"
+                for new_route in "${routes[@]}"; do
+                    route add -net "$new_route" gw "${route[1]}" metric "${route[4]}" dev "${route[7]}"
+                done
+            fi
+        fi
+    done
+fi

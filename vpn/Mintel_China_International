@@ -1,0 +1,33 @@
+[connection]
+id=Mintel_China_International
+permissions=user:{{ ansible_user_id }}:;
+type=vpn
+uuid={{ "Mintel_China_International_VPN" | to_uuid }}
+zone=work
+
+[vpn]
+ca={{ mintel_vpn_credential_dir }}/ca.crt
+cert={{ mintel_vpn_credential_dir }}/{{ mintel.laptop_id }}.crt
+cipher=DES-EDE3-CBC
+comp-lzo=adaptive
+connection-type=password-tls
+dev=tun
+key={{ mintel_vpn_credential_dir }}/{{ mintel.laptop_id }}.key
+ns-cert-type=server
+password-flags=1
+proto-tcp=yes
+remote-random=yes
+remote=relay3.cn.mintel.com:443 relay4.cn.mintel.com:443
+service-type=org.freedesktop.NetworkManager.openvpn
+username={{ mintel.email }}
+
+[ipv4]
+dns-search=mintel.ad;mintel.co.uk
+method=auto
+never-default=true
+
+[ipv6]
+addr-gen-mode=stable-privacy
+dns-search=
+method=auto
+never-default=true

@@ -1,0 +1,3 @@
+Host *.mintel.ad
+	HostKeyAlgorithms=+ssh-dss
+        PubkeyAcceptedKeyTypes +ssh-rsa

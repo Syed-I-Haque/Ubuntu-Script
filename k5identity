@@ -1,0 +1,1 @@
+{{ mintel.name }}@{{ mintel.office | upper }}.MINTEL.AD

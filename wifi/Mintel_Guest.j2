@@ -1,0 +1,23 @@
+[connection]
+id=Mintel_Guest_wifi
+permissions=user:{{ ansible_user_id }}:;
+type=wifi
+uuid={{ item | to_uuid }}
+zone=public
+
+[wifi]
+mode=infrastructure
+ssid=Mintel Guest Wifi
+
+[wifi-security]
+auth-alg=open
+key-mgmt=wpa-psk
+psk=MintelGuest
+
+[ipv4]
+addr-gen-mode=stable-privacy
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=auto

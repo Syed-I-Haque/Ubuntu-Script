@@ -1,0 +1,29 @@
+[connection]
+autoconnect-priority=1
+id=Mintel_London_wifi
+permissions=user:{{ ansible_user_id }}:;
+type=wifi
+uuid={{ item | to_uuid }}
+zone=work
+
+[wifi]
+mode=infrastructure
+ssid=stanstead
+
+[wifi-security]
+auth-alg=open
+key-mgmt=wpa-eap
+
+[802-1x]
+eap=peap;
+identity=MINTEL_{{ mintel.office | upper }}\\{{ mintel.name }}
+password={{ mintel.windows_password }}
+phase2-auth=mschapv2
+
+[ipv4]
+addr-gen-mode=stable-privacy
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=auto

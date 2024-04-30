@@ -1,25 +1,25 @@
 [connection]
 id=Mintel_Chicago
-permissions=user:{{ ansible_user_id }}:;
+permissions=user:$USERNAME:;
 type=vpn
-uuid={{ "Mintel_Chicago_VPN" | to_uuid }}
+uuid=$UUID_CHICAGO_VPN
 zone=work
 
 [vpn]
-ca={{ mintel_vpn_credential_dir }}/ca.crt
-cert={{ mintel_vpn_credential_dir }}/{{ mintel.laptop_id }}.crt
+ca=MINTEL_VPN_DIR/ca.crt
+cert=$MINTEL_VPN_DIR/$HOSTNAME.crt
 cipher=DES-EDE3-CBC
 comp-lzo=adaptive
 connection-type=password-tls
 dev=tun
-key={{ mintel_vpn_credential_dir }}/{{ mintel.laptop_id }}.key
+key=$MINTEL_VPN_DIR/$HOSTNAME.key
 ns-cert-type=server
 password-flags=1
 proto-tcp=yes
 remote-random=yes
 remote=relay1.chi-dc.mintel.com:443 relay2.chi-dc.mintel.com:443
 service-type=org.freedesktop.NetworkManager.openvpn
-username={{ mintel.email }}
+username=$MINTEL_EMAIL
 
 [ipv4]
 dns-search=mintel.ad;mintel.co.uk

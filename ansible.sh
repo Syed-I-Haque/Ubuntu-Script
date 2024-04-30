@@ -101,6 +101,10 @@ for profile in "${wifi_profile[@]}";do
   sudo install -D -m 600 -o root -g root "$profile"_wifi \
   -t /etc/NetworkManager/system-connections
 done
+dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-phase2-ca-cert "'false'"
+dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-ca-cert "'true'"
+dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-phase2-ca-cert "'false'"
+dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-ca-cert "'true'"
 sudo systemctl restart NetworkManager
 
 #Changing Windows password from Linux

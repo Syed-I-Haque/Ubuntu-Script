@@ -1,8 +1,8 @@
 [connection]
 id=Mintel_Guest_wifi
-permissions=user:{{ ansible_user_id }}:;
+permissions=user:$USERNAME:;
 type=wifi
-uuid={{ item | to_uuid }}
+uuid=$UUID_GUEST
 zone=public
 
 [wifi]

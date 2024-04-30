@@ -11,5 +11,5 @@ MINTEL_VPN_DIR="$HOME/.OpenVPN/mintel"
 MINTEL_OFFICE="$addomain"
 MINTEL_NAME="$useradaccount"
 MINTEL_EMAIL="$useremail"
-WINDOWS_PASSWORD="$USERADPASS"
+WINDOWS_PASSWORD="$useradpass"
 

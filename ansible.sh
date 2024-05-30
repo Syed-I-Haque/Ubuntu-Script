@@ -42,8 +42,8 @@ curl -fsSL https://dl.google.com/linux/linux_signing_key.pub \
   | sudo gpg --dearmour -o /usr/share/keyrings/google_linux_signing_key.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google_linux_signing_key.gpg] http://dl.google.com/linux/chrome/deb/ stable main" \
   | sudo tee /etc/apt/sources.list.d/google.list > /dev/null
-sudo apt update
-sudo apt install google-chrome-stable -y
+sudo apt-get update
+sudo apt-get install google-chrome-stable -y
 
 #Installing docker and adding a config file
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
@@ -62,6 +62,7 @@ for i in " \
 sudo apt-get install -yqq "$i"
 done
 
+envsubst < mintel_conf > mintel.conf
 sudo install -D -o root -g root mintel.conf -t /etc/systemd/system/docker.service.d/
 sudo systemctl daemon-reload
 sudo systemctl restart docker
@@ -72,11 +73,6 @@ python3 -m userpath prepend "$HOME/.local/bin"
 
 #Docker compose
 sudo apt-get install docker-compose-plugin
-
-#Disabling systemd-resolved
-sudo systemctl disable systemd-resolved.service
-sudo systemctl stop systemd-resolved
-sudo install -m 644 -o root -g root NetworkManager.conf /etc/NetworkManager/
 
 #OpenVPN and other configurations
 sudo install -m 700 -o "$USERNAME" -g "$USERNAME" -d "$MINTEL_VPN_DIR"
@@ -105,13 +101,13 @@ dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-phase2-ca-cert "'fals
 dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-ca-cert "'true'"
 dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-phase2-ca-cert "'false'"
 dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-ca-cert "'true'"
-sudo systemctl restart NetworkManager
+
 
 #Changing Windows password from Linux
-sudo apt install krb5-user
+sudo apt-get install krb5-user
 envsubst < krb5 > krb5.conf
 envsubst < k5identity > k5identity
-sudo install -m 644 -o root -g root krb5 /etc/krb5.conf
+sudo install -m 644 -o root -g root krb5.conf /etc/krb5.conf
 sudo install -m 600 k5identity "$HOME"/.k5identity 
 
 #Portal tools
@@ -119,9 +115,6 @@ $HOME/.local/bin/pipx install --force --python /usr/bin/python3 black tox pipenv
 
 #ssh config file
 sudo install -m 600 -u "$USERNAME" -g "$USERNAME" config ~/.ssh/ 
-
-#docker-dnsdock and configuration
-sudo apt install dnsmasq -y
 
 #Manage Engine
 unzip ./DefaultRemoteOffice_LinuxAgent.zip -d ./MEDC
@@ -133,6 +126,36 @@ sudo ./UEMS_LinuxAgent.bin
 sudo chmod +x ./klnagent64_14.2.0-35148_amd64.sh
 sudo ./klnagent64_14.2.0-35148_amd64.sh
 
-#TODO: docker-dnsdock related configuration
+
+#docker-dnsdock and dnsmasq configuration
+sudo apt-get install dnsmasq -y
+sudo systemctl stop dnsmasq
+sudo systemctl disable systemd-resolved.service
+sudo systemctl stop systemd-resolved
+sudo install -D -o root -g root docker-system-dnsmasq.service \ 
+  -t /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl stop docker-system-dnsmasq
+sudo install -m 644 -o root -g root NetworkManager.conf /etc/NetworkManager/
+envsubst < 90.docker > 90-docker
+sudo install -D -o root -g root 90-docker \ 
+  -t /etc/NetworkManager/dnsmasq.d/
+sudo rm /etc/resolv.conf
+sudo systemctl restart NetworkManager
+envsubst < docker-dnsdock-service > docker-dnsdock.service
+sudo install -D -o root -g root docker-dnsdock.service \ 
+  -t /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl stop docker-dnsdock
+sudo systemctl enable docker-dnsdock docker-system-dnsmasq
+sudo systemctl start docker-dnsdock docker-system-dnsmasq
+sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 53
+sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 1053
+envsubst < minteldnsdock > minteldnsdock.conf
+sudo install -D -o root -g root minteldnsdock.conf -t /etc/systemd/system/docker.service.d/mintel.conf
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+
 
 #TODO: Configuring Printers

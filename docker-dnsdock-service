@@ -1,0 +1,15 @@
+[Unit]
+Description=DNS Dock Service
+Documentation=https://github.com/aacebedo/dnsdock
+After=docker-system-dnsmasq.service
+Requires=docker.service
+
+[Service]
+# Pinned to v1.16.4-amd64.
+ExecStartPre=-/usr/bin/docker pull aacebedo/dnsdock@sha256:795d2e7fe64b1556f4a0713b904dbf201e632c8fc35681134eecb9ccc736066b
+ExecStartPre=-/usr/bin/docker rm -f dnsdock
+ExecStart=/usr/bin/docker run --name dnsdock -v /var/run/docker.sock:/var/run/docker.sock -p $DOCKER_BRIDGE:1053:53/udp -m 64M aacebedo/dnsdock@sha256:795d2e7fe64b1556f4a0713b904dbf201e632c8fc35681134eecb9ccc736066b --nameserver $DOCKER_BRIDGE
+ExecStop=/usr/bin/docker rm -f dnsdock
+
+[Install]
+WantedBy=multi-user.target

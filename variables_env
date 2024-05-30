@@ -10,6 +10,11 @@ UUID_CHINA_INTERNATIONAL="$(uuidgen --sha1 --namespace 361E6D51-FAEC-444A-9079-3
 MINTEL_VPN_DIR="$HOME/.OpenVPN/mintel"
 MINTEL_OFFICE="$addomain"
 MINTEL_NAME="$useradaccount"
+MINTEL_NAME_UPPER="${useradaccount^^}"
 MINTEL_EMAIL="$useremail"
 WINDOWS_PASSWORD="$useradpass"
+DOCKER_BRIDGE="10.20.0.1"
+DOCKER_BRIDGE_RANGE="10.20.0.1/26"
+DOCKER_ADDR_POOL="base=10.20.0.1/18,size=26"
+
 

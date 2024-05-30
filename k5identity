@@ -1,1 +1,1 @@
-{{ mintel.name }}@{{ mintel.office | upper }}.MINTEL.AD
+$MINTEL_NAME_UPPER@$MINTEL_OFFICE.MINTEL.AD

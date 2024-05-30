@@ -1,0 +1,11 @@
+[Unit]
+Description=DNS proxy server.
+After=network.target
+After=docker.service
+Wants=docker.service
+
+[Service]
+ExecStart=/usr/sbin/dnsmasq -k --interface=docker0 --except-interface=lo --bind-interfaces --port 53 --cache-size=0
+
+[Install]
+WantedBy=multi-user.target

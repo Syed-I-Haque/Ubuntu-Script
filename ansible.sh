@@ -3,14 +3,14 @@
 #Configure all the ansible roles using Bash
 
 #Removing Ubuntu bloatware, enable ufw and install 3rd party graphics drivers.
-for i in " \
+for i in \
           rhythmbox \
           transmission-common \
           transmission-gtk \
           totem \
           totem-plugins \
           totem-common \
-          gnome-sudoku";do
+          gnome-sudoku;do
 
 sudo apt-get remove -yqq "$i"
 done
@@ -53,12 +53,12 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
   | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-for i in " \
+for i in \
   docker-ce \
   docker-ce-cli \
   containerd.io \
   docker-buildx-plugin \
-  docker-compose-plugin";do
+  docker-compose-plugin;do
 sudo apt-get install -yqq "$i"
 done
 

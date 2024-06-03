@@ -7,7 +7,7 @@ sudo apt-get update
 ###########################################################
     #LastPass Prereqs/Make/Login
     echo "Installing LastPass, standby for login..."
-    for i in "\
+    for i in \
         bash-completion \
         build-essential \
         cmake \
@@ -21,7 +21,7 @@ sudo apt-get update
         make \
         pkg-config \
         ca-certificates \
-        xclip"; do 
+        xclip; do 
     sudo apt-get --no-install-recommends -yqq install $i
     done
     git clone https://github.com/LastPass/lastpass-cli ~/.lastpass
@@ -41,7 +41,7 @@ sudo apt-get update
 
     #Common Packages: Tools\
     echo "Installing Common Tools..."
-    for i in "\
+    for i in \
         build-essential \
         bzip2 \
         curl \
@@ -65,52 +65,52 @@ sudo apt-get update
 	uuid-runtime \
         vim \
         wget \
-        xz-utils"; do 
+        xz-utils; do 
     sudo apt-get install -yqq $i
     done
 
     #Common Packages: PostgreSQL
     echo "Installing PostgreSQL Prereqs..."
-    for i in "\
+    for i in \
         postgresql-client \
-        libpq-dev"; do 
+        libpq-dev; do 
     sudo apt-get install -yqq $i
     done
     
     #Common Packages: MySQL
     echo "Installing MySQL Prereqs..."
-    for i in "\
+    for i in \
         mysql-client \
-        libmysqlclient-dev"; do 
+        libmysqlclient-dev; do 
     sudo apt-get install -yqq $i
     done
 
     #Common Packages: Python
     echo "Installing Python Prereqs..."
-    for i in "\
+    for i in \
         python \
         python-pip \
         python-virtualenv \
         python3 \
         python3-pip \
 	python3-venv \
-        python3-virtualenv"; do 
+        python3-virtualenv; do 
     sudo apt-get install -yqq $i
     done
 
     #Common Packages: Library Sources
     echo "Installing Library Sources..."
-    for i in "\
+    for i in \
         libyaml-dev \
 	libxmlsec1-dev \
 	liblasso3-dev \
-	libxslt1-dev"; do 
+	libxslt1-dev; do 
     sudo apt-get install -yqq $i
     done
 
     #Common Packages: Other (do not include ubuntu-restricted-extras)
     echo "Installing Misc. Tools..."
-    for i in "\
+    for i in \
         vlc \
         gimp \
         libreoffice \
@@ -122,13 +122,13 @@ sudo apt-get update
         ufw \
         ubuntu-drivers-common \
         autorandr \
-        sosreport"; do 
+        sosreport; do 
     sudo apt-get install -yqq $i
     done
 
     #DisplayLink Prereqs
     echo "Installing DisplayLink Prereqs..."
-    for i in "\
+    for i in \
         dkms \
         gawk \
         wget \
@@ -136,41 +136,41 @@ sudo apt-get update
         lsb-release \
         linux-source \
         python-pexpect \
-        perl"; do 
+        perl; do 
     sudo apt-get install -yqq $i
     done
 
     #OpenVPN Prereqs
     echo "Installing OpenVPN Prereqs..."
-    for i in "\
+    for i in \
         network-manager-openvpn \
         network-manager-openvpn-gnome \
-        network-manager"; do 
+        network-manager; do 
     sudo apt-get install -yqq $i
     done
 
     #Mintel Printing Prereqs
     echo "Installing Printing Prereqs..."
-    for i in "\
+    for i in \
         openprinting-ppds \
-        smbclient"; do 
+        smbclient; do 
     sudo apt-get install -yqq $i
     done
 
     #Mintel Wifi Prereqs
     echo "Installing Wifi Prereqs..."
-    for i in "\
+    for i in \
         network-manager \
-        python-psutil"; do 
+        python-psutil; do 
     sudo apt-get install -yqq $i
     done
     
     #Yubikey-GPG Prereqs
     echo "Installing Yubikey-GPG Prereqs..."
-    for i in "\
+    for i in \
         scdaemon \
         yubikey-personalization \
-        ldapscripts"; do 
+        ldapscripts; do 
     sudo apt-get install -yqq $i
     done
 
@@ -178,9 +178,9 @@ sudo apt-get update
     #OCS Prereqs (do not include, OCS install not silent)
 
     #Ansible, Yubikey-LUKS
-    for i in "\
+    for i in \
         ansible \
-        yubikey-luks"; do 
+        yubikey-luks; do 
     sudo apt-get install -yqq $i
     done
 

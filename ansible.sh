@@ -151,7 +151,7 @@ sudo systemctl enable docker-dnsdock docker-system-dnsmasq
 sudo systemctl start docker-dnsdock docker-system-dnsmasq
 sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 53
 sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 1053
-envsubst < ./dns_dock/minteldnsdock > mintel.conf
+envsubst < ./dns_dock/minteldnsdock > ./dns_dock/mintel.conf
 sudo install -D -o root -g root ./dns_dock/mintel.conf -t /etc/systemd/system/docker.service.d/
 sudo systemctl daemon-reload
 sudo systemctl restart docker

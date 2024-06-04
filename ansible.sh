@@ -68,11 +68,11 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 
 #Installing userpath, pipx and adding .local/bin to the PATH variable
-pip install --user userpath pipx
+pip install --user --no-warn-script-location userpath pipx
 python3 -m userpath prepend "$HOME/.local/bin"
 
 #Docker compose
-sudo apt-get install docker-compose-plugin
+sudo apt-get install docker-compose-plugin -yqq
 
 #OpenVPN and other configurations
 sudo install -m 700 -o "$USERNAME" -g "$USERNAME" -d "$MINTEL_VPN_DIR"
@@ -104,14 +104,14 @@ dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-ca-cert "'true'"
 
 
 #Changing Windows password from Linux
-sudo apt-get install krb5-user
+DEBIAN_FRONTEND=noninteractive sudo apt-get install krb5-user -yqq
 envsubst < krb5 > krb5.conf
 envsubst < k5identity > k5identity
 sudo install -m 644 -o root -g root krb5.conf /etc/krb5.conf
 sudo install -m 600 k5identity "$HOME"/.k5identity 
 
 #Portal tools
-$HOME/.local/bin/pipx install --force --python /usr/bin/python3 black tox pipenv bumpversion pre-commit
+$HOME/.local/bin/pipx install --force --python /usr/bin/python3 black tox pipenv bump2version pre-commit poetry isort
 
 #ssh config file
 sudo install -m 600 -u "$USERNAME" -g "$USERNAME" config ~/.ssh/ 

@@ -83,10 +83,10 @@ for profile in "${vpn_profile[@]}";do
   envsubst < "./vpn/$profile" > "$profile"_VPN
 done
 for profile in "${vpn_profile[@]}";do
-  sudo install -D -m 600 -o root -g root "$profile"_VPN \
-  -t /etc/NetworkManager/system-connections/
+  sudo install -D -m 600 -o root -g root "$profile"_VPN -t \
+    /etc/NetworkManager/system-connections/
 done
-sudo install -m 755 -o root -g root 90-mintel-openvpn-docker-routes /etc/NetworkManager/dispatcher.d/
+sudo install -D -m 755 -o root -g root 90-mintel-openvpn-docker-routes -t /etc/NetworkManager/dispatcher.d/
 
 #Wifi
 wifi_profile=("Mintel_London" "Mintel_Chicago" "Mintel_Guest")
@@ -94,8 +94,7 @@ for profile in "${wifi_profile[@]}";do
   envsubst < "./wifi/$profile" > "$profile"_wifi
 done
 for profile in "${wifi_profile[@]}";do
-  sudo install -D -m 600 -o root -g root "$profile"_wifi \
-  -t /etc/NetworkManager/system-connections
+  sudo install -D -m 600 -o root -g root "$profile"_wifi -t /etc/NetworkManager/system-connections/
 done
 dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-phase2-ca-cert "'false'"
 dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-ca-cert "'true'"
@@ -114,7 +113,7 @@ sudo install -m 600 k5identity "$HOME"/.k5identity
 $HOME/.local/bin/pipx install --force --python /usr/bin/python3 black tox pipenv bump2version pre-commit poetry isort
 
 #ssh config file
-sudo install -m 600 -u "$USERNAME" -g "$USERNAME" config ~/.ssh/ 
+sudo install -D -m 600 -o "$USERNAME" -g "$USERNAME" config -t ~/.ssh/ 
 
 #Manage Engine
 unzip ./DefaultRemoteOffice_LinuxAgent.zip -d ./MEDC
@@ -132,19 +131,16 @@ sudo apt-get install dnsmasq -y
 sudo systemctl stop dnsmasq
 sudo systemctl disable systemd-resolved.service
 sudo systemctl stop systemd-resolved
-sudo install -D -o root -g root docker-system-dnsmasq.service \ 
-  -t /etc/systemd/system/
+sudo install -D -o root -g root docker-system-dnsmasq.service -t /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl stop docker-system-dnsmasq
 sudo install -m 644 -o root -g root NetworkManager.conf /etc/NetworkManager/
 envsubst < 90.docker > 90-docker
-sudo install -D -o root -g root 90-docker \ 
-  -t /etc/NetworkManager/dnsmasq.d/
+sudo install -D -o root -g root 90-docker -t /etc/NetworkManager/dnsmasq.d/
 sudo rm /etc/resolv.conf
 sudo systemctl restart NetworkManager
 envsubst < docker-dnsdock-service > docker-dnsdock.service
-sudo install -D -o root -g root docker-dnsdock.service \ 
-  -t /etc/systemd/system/
+sudo install -D -o root -g root docker-dnsdock.service -t /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl stop docker-dnsdock
 sudo systemctl enable docker-dnsdock docker-system-dnsmasq

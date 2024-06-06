@@ -116,7 +116,7 @@ $HOME/.local/bin/pipx install --force --python /usr/bin/python3 black tox pipenv
 sudo install -D -m 600 -o "$USERNAME" -g "$USERNAME" config -t ~/.ssh/ 
 
 #Manage Engine
-unzip ./DefaultRemoteOffice_UEMSLinuxAgent.zip -d ./MEDC
+unzip ./DefaultRemoteOffice_UEMSLinuxAgent.zip -d ./MEDC
 cd ./MEDC
 sudo chmod +x UEMS_LinuxAgent.bin
 sudo ./UEMS_LinuxAgent.bin

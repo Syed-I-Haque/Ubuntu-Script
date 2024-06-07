@@ -7,6 +7,7 @@ zone=work
 
 [vpn]
 ca=$MINTEL_VPN_DIR/ca.crt
+tls-cipher=DEFAULT:@SECLEVEL=0
 cert=$MINTEL_VPN_DIR/$HOSTNAME.crt
 cipher=DES-EDE3-CBC
 comp-lzo=adaptive

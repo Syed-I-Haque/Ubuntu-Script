@@ -105,9 +105,10 @@ dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-ca-cert "'true'"
 #Changing Windows password from Linux
 DEBIAN_FRONTEND=noninteractive sudo apt-get install krb5-user -yqq
 envsubst < krb5 > krb5.conf
-envsubst < k5identity > k5identity
+envsubst < k5 > k5identity
 sudo install -m 644 -o root -g root krb5.conf /etc/krb5.conf
-sudo install -m 600 k5identity "$HOME"/.k5identity 
+sudo install -m 600 -o "$USERNAME" -g "$USERNAME" k5identity "$HOME"/.k5identity 
+sudo install -D -m 755 -o root -g root winpasswd -t /usr/local/bin/
 
 #Portal tools
 $HOME/.local/bin/pipx install --force --python /usr/bin/python3 black tox pipenv bump2version pre-commit poetry isort

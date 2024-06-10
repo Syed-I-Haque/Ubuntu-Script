@@ -1,0 +1,21 @@
+#!/bin/sh
+# Change Active Directory/Windows password via Kerberos
+
+set -e
+
+principal="$(cat ~/.k5identity)"
+
+if [ -z "$principal" ]; then
+	echo "ERROR: ~/.k5identity file empty or doesn't exist"
+	exit 1
+fi
+
+echo "Enter your current Windows password."
+kinit "$principal"
+echo "Enter your current Windows password again, then new password."
+if kpasswd "$principal"; then
+	echo "Success! Don't forget to change your WiFi settings to use the new password.";
+else
+	echo "Failed";
+	exit 1;
+fi

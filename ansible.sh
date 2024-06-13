@@ -117,41 +117,43 @@ $HOME/.local/bin/pipx install --force --python /usr/bin/python3 black tox pipenv
 sudo install -D -m 600 -o "$USERNAME" -g "$USERNAME" config -t ~/.ssh/ 
 
 #Manage Engine
-unzip ./DefaultRemoteOffice_UEMSLinuxAgent.zip -d ./MEDC
-cd ./MEDC
-sudo chmod +x UEMS_LinuxAgent.bin
+unzip ./DefaultRemoteOffice_UEMSLinuxAgent.zip
+sudo chmod +x UEMS_LinuxAgent.bin
 sudo ./UEMS_LinuxAgent.bin
 
 #Kaspersky
-sudo chmod +x ./klnagent64_14.2.0-35148_amd64.sh
+sudo chmod +x klnagent64_14.2.0-35148_amd64.sh
 sudo ./klnagent64_14.2.0-35148_amd64.sh
 
+#Disable systemd-resolved
+sudo systemctl disable systemd-resolved.service
+sudo systemctl stop systemd-resolved
+sudo install -m 644 -o root -g root NetworkManager.conf /etc/NetworkManager/
+sudo rm /etc/resolv.conf
+sudo systemctl restart NetworkManager
 
 #docker-dnsdock and dnsmasq configuration
 sudo apt-get install dnsmasq -y
 sudo systemctl stop dnsmasq
-sudo systemctl disable systemd-resolved.service
-sudo systemctl stop systemd-resolved
-sudo install -D -o root -g root docker-system-dnsmasq.service -t /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl stop docker-system-dnsmasq
-sudo install -m 644 -o root -g root NetworkManager.conf /etc/NetworkManager/
-envsubst < 90.docker > 90-docker
-sudo install -D -o root -g root 90-docker -t /etc/NetworkManager/dnsmasq.d/
-sudo rm /etc/resolv.conf
-sudo systemctl restart NetworkManager
-envsubst < docker-dnsdock-service > docker-dnsdock.service
-sudo install -D -o root -g root docker-dnsdock.service -t /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl stop docker-dnsdock
-sudo systemctl enable docker-dnsdock docker-system-dnsmasq
-sudo systemctl start docker-dnsdock docker-system-dnsmasq
-sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 53
-sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 1053
-envsubst < ./dns_dock/minteldnsdock > ./dns_dock/mintel.conf
-sudo install -D -o root -g root ./dns_dock/mintel.conf -t /etc/systemd/system/docker.service.d/
-sudo systemctl daemon-reload
-sudo systemctl restart docker
+# sudo install -D -o root -g root docker-system-dnsmasq.service -t /etc/systemd/system/
+# sudo systemctl daemon-reload
+# sudo systemctl stop docker-system-dnsmasq
+# sudo install -m 644 -o root -g root NetworkManager.conf /etc/NetworkManager/
+# envsubst < 90.docker > 90-docker
+# sudo install -D -o root -g root 90-docker -t /etc/NetworkManager/dnsmasq.d/
+
+# envsubst < docker-dnsdock-service > docker-dnsdock.service
+# sudo install -D -o root -g root docker-dnsdock.service -t /etc/systemd/system/
+# sudo systemctl daemon-reload
+# sudo systemctl stop docker-dnsdock
+# sudo systemctl enable docker-dnsdock docker-system-dnsmasq
+# sudo systemctl start docker-dnsdock docker-system-dnsmasq
+# sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 53
+# sudo ufw allow from "$DOCKER_BRIDGE_RANGE" proto udp to "$DOCKER_BRIDGE" port 1053
+# envsubst < ./dns_dock/minteldnsdock > ./dns_dock/mintel.conf
+# sudo install -D -o root -g root ./dns_dock/mintel.conf -t /etc/systemd/system/docker.service.d/
+# sudo systemctl daemon-reload
+# sudo systemctl restart docker
 
 
 

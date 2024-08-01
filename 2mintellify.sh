@@ -69,7 +69,7 @@ read -p ""
 ############################
    
     crypt=$(cat /etc/crypttab | cut -d "_" -f1)
-    lukskey=$(pwgen -s 38 1)
+    lukskey=$(pwgen -s 27 1)
     printf '%s\n' "$serial" "$lukskey" "$lukskey" | sudo cryptsetup luksAddKey --key-slot 1 "/dev/$crypt"
     printf "Password: $lukskey" | lpass add --sync=now --non-interactive "Shared-Global Support/Ubuntu LUKS Keys/$hostname $timestamp"
 

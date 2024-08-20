@@ -2,4 +2,4 @@
 ExecStart=
 # Docker will choose an IP range for the bridge network that conflicts with the Mintel Chicago office.
 # Force a different range.
-ExecStart=/usr/bin/dockerd --bip=$DOCKER_BRIDGE_RANGE --default-address-pool=base=$DOCKER_ADDR_POOL
+ExecStart=/usr/bin/dockerd --bip=$DOCKER_BRIDGE_RANGE --default-address-pool=$DOCKER_ADDR_POOL

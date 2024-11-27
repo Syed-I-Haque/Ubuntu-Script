@@ -121,9 +121,8 @@ unzip ./DefaultRemoteOffice_UEMSLinuxAgent.zip
 sudo chmod +x UEMS_LinuxAgent.bin
 sudo ./UEMS_LinuxAgent.bin
 
-#Kaspersky
-sudo chmod +x klnagent64_14.2.0-35148_amd64.sh
-sudo ./klnagent64_14.2.0-35148_amd64.sh
+#Defender
+source ./combined_installer.sh
 
 #Disable systemd-resolved
 sudo systemctl disable systemd-resolved.service

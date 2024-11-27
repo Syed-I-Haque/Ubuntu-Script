@@ -155,6 +155,9 @@ sudo systemctl stop dnsmasq
 # sudo systemctl daemon-reload
 # sudo systemctl restart docker
 
+#Disable Hardware Acceleration for Precision 5690
+source ./parameter.sh
+
 
 
 #TODO: Configuring Printers

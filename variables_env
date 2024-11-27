@@ -16,5 +16,7 @@ WINDOWS_PASSWORD="$useradpass"
 DOCKER_BRIDGE="10.20.0.1"
 DOCKER_BRIDGE_RANGE="10.20.0.1/26"
 DOCKER_ADDR_POOL="base=10.20.0.1/18,size=26"
+PARAM="i915.enable_guc=0"
+GRUB_FILE="/etc/default/grub"
 
 

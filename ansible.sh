@@ -100,6 +100,8 @@ dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-phase2-ca-cert "'fals
 dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-ca-cert "'true'"
 dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-phase2-ca-cert "'false'"
 dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-ca-cert "'true'"
+dconf write /org/gnome/nm-applet/eap/"$UUID_SHANGHAI"/ignore-phase2-ca-cert "'false'"
+dconf write /org/gnome/nm-applet/eap/"$UUID_SHANGHAI"/ignore-ca-cert "'true'"
 
 
 #Changing Windows password from Linux

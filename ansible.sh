@@ -89,7 +89,7 @@ done
 sudo install -D -m 755 -o root -g root 90-mintel-openvpn-docker-routes -t /etc/NetworkManager/dispatcher.d/
 
 #Wifi
-wifi_profile=("Mintel_London" "Mintel_Chicago" "Mintel_Guest")
+wifi_profile=("Mintel_London" "Mintel_Chicago" "Mintel_Guest" "Mintel_Shanghai")
 for profile in "${wifi_profile[@]}";do
   envsubst < "./wifi/$profile" > "$profile"_wifi
 done
@@ -100,6 +100,8 @@ dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-phase2-ca-cert "'fals
 dconf write /org/gnome/nm-applet/eap/"$UUID_LONDON"/ignore-ca-cert "'true'"
 dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-phase2-ca-cert "'false'"
 dconf write /org/gnome/nm-applet/eap/"$UUID_CHICAGO"/ignore-ca-cert "'true'"
+dconf write /org/gnome/nm-applet/eap/"$UUID_SHANGHAI"/ignore-phase2-ca-cert "'false'"
+dconf write /org/gnome/nm-applet/eap/"$UUID_SHANGHAI"/ignore-ca-cert "'true'"
 
 
 #Changing Windows password from Linux

@@ -89,7 +89,7 @@ done
 sudo install -D -m 755 -o root -g root 90-mintel-openvpn-docker-routes -t /etc/NetworkManager/dispatcher.d/
 
 #Wifi
-wifi_profile=("Mintel_London" "Mintel_Chicago" "Mintel_Guest")
+wifi_profile=("Mintel_London" "Mintel_Chicago" "Mintel_Guest" "Mintel_Shanghai")
 for profile in "${wifi_profile[@]}";do
   envsubst < "./wifi/$profile" > "$profile"_wifi
 done

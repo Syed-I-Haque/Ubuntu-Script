@@ -18,7 +18,7 @@ ns-cert-type=server
 password-flags=1
 proto-tcp=yes
 remote-random=yes
-remote=relay3.cn.mintel.com:443 relay4.cn.mintel.com:443
+remote=relay3.cn.mintel.com:443 relay-vpn1.apac.mintel.com:443
 service-type=org.freedesktop.NetworkManager.openvpn
 username=$MINTEL_EMAIL
 

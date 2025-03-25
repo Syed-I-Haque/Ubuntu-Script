@@ -38,13 +38,16 @@ read -p ""
             echo "    1. CHICAGO.MINTEL.AD"
             echo "    2. LONDON.MINTEL.AD"
             echo "    3. SHANGHAI.MINTEL.AD"
-            read -r -p "Make a selection (1,2,3): " addomain
+            echo "    4. APAC.MINTEL.AD"
+            read -r -p "Make a selection (1,2,3,4): " addomain
             if [[ "$addomain" = 1 ]];then
                 addomain="CHICAGO"
             elif [[ "$addomain" = 2 ]];then
                 addomain="LONDON"
             elif [[ "$addomain" = 3 ]];then
                 addomain="SHANGHAI"
+            elif [[ "$addomain" = 4 ]];then
+                addomain="APAC"
             else
                 echo ""
                 echo "INVALID SELECTION: Please select 1, 2, or 3."

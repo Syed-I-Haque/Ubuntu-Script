@@ -124,7 +124,7 @@ sudo chmod +x UEMS_LinuxAgent.bin
 sudo ./UEMS_LinuxAgent.bin
 
 #Defender
-source ./combined_installer.sh
+sudo bash ./combined_installer.sh
 
 #Disable systemd-resolved
 sudo systemctl disable systemd-resolved.service

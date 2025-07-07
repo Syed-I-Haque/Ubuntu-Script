@@ -126,6 +126,9 @@ sudo ./UEMS_LinuxAgent.bin
 #Defender
 sudo bash ./combined_installer.sh
 
+#Intune and Edge
+sudo bash ./Intune.sh
+
 #Disable systemd-resolved
 sudo systemctl disable systemd-resolved.service
 sudo systemctl stop systemd-resolved

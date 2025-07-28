@@ -14,24 +14,10 @@ abort() {
 }
 
 
-log "Configuring Microsoft GPG keys..."
-wget -qO - https://packages.microsoft.com/keys/microsoft.asc \
- | gpg --dearmor > microsoft.gpg || >>"$LOGFILE" 2>&1 abort "Failed fetching the Microsoft GPG key."
-install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg >>"$LOGFILE" 2>&1 \
- || abort "Failed to copy the GPG key."
-
 log "Adding Microsoft Edge and Intune repository."
- echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] \
+ echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft-prod.gpg] \
  https://packages.microsoft.com/repos/edge stable main" | tee /etc/apt/sources.list.d/microsoft-edge.list >> \
  "$LOGFILE" 2>&1 || abort "Failed to add the Microsoft repository."
- 
-DISTRO=$(lsb_release -cs)
-VERSION=$(lsb_release -rs)
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] \
- https://packages.microsoft.com/ubuntu/${VERSION}/prod ${DISTRO} main" \
- | tee /etc/apt/sources.list.d/microsoft-ubuntu-${DISTRO}-prod.list >> "$LOGFILE" 2>&1 \
- || abort "Failed to add the Microsoft repository."
-rm microsoft.gpg
 
 log "Starting system update..."
 apt-get update >>"$LOGFILE" 2>&1 || abort "apt update failed."
